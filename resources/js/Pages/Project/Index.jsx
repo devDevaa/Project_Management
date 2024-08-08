@@ -6,7 +6,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import TableHeading from "@/Components/TableHeading";
 
-export default function Index({ auth, projects, queryParams = null }) {
+export default function Index({ auth, projects, queryParams = null, success }) {
     // console.log(projects);
 
     queryParams = queryParams || {};
@@ -46,14 +46,34 @@ export default function Index({ auth, projects, queryParams = null }) {
         <AuthenticatedLayout
             user={auth.user}
             header={
-                <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    Projects
-                </h2>
+                <div className="flex items-center justify-between">
+                    <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                        Projects
+                    </h2>
+                    <Link
+                        href={route("projects.create")}
+                        className="bg-gray-700 py-1 px-3 text-white rounded shadow transition-all hover:bg-gray-800"
+                    >
+                        Create Project
+                    </Link>
+                </div>
             }
         >
             <Head title="Projects" />
 
             <div className="py-12">
+                {success && (
+                    <div className="flex items-end justify-end cursor-pointer alertmsg"
+                    onClick={() => {
+                        const successMessage = document.querySelector('.alertmsg');
+                        successMessage.parentNode.removeChild(successMessage);
+                    }}>
+                        <div className="bg-gray-600 py-2 px-4 w-2/6 text-white rounded mb-3 me-16">
+                            {success}
+                        </div>
+
+                    </div>
+                )}
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
@@ -72,11 +92,10 @@ export default function Index({ auth, projects, queryParams = null }) {
                                             <TableHeading
                                                 name="image"
                                                 sortChanged={sortChanged}
-                                                sortable = {false}
+                                                sortable={false}
                                             >
                                                 Image
                                             </TableHeading>
-
 
                                             <TableHeading
                                                 name="name"
@@ -109,7 +128,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                                             <TableHeading
                                                 name="image"
                                                 sortChanged={sortChanged}
-                                                sortable = {false}
+                                                sortable={false}
                                             >
                                                 Created By
                                             </TableHeading>
@@ -117,7 +136,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                                             <TableHeading
                                                 name="image"
                                                 sortChanged={sortChanged}
-                                                sortable = {false}
+                                                sortable={false}
                                             >
                                                 Actions
                                             </TableHeading>
@@ -203,7 +222,12 @@ export default function Index({ auth, projects, queryParams = null }) {
                                                     />
                                                 </td>
                                                 <td className="px-3 py-2 text-gray-300 hover:underline">
-                                                    <Link href={route('projects.show', project.id)}>
+                                                    <Link
+                                                        href={route(
+                                                            "projects.show",
+                                                            project.id
+                                                        )}
+                                                    >
                                                         {project.name}
                                                     </Link>
                                                 </td>

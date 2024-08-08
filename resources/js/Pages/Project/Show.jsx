@@ -16,7 +16,7 @@ export default function Show({ auth, project, tasks, queryParams }) {
                     </h2>
                     <Link
                         href={route("projects.edit", project.id)}
-                        className="bg-gray-700 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
+                        className="bg-gray-700 py-1 px-3 text-white rounded shadow transition-all hover:bg-gray-800"
                     >
                         Edit Project
                     </Link>
@@ -34,7 +34,7 @@ export default function Show({ auth, project, tasks, queryParams }) {
                                 className="w-full h-64 object-cover"
                             />
                         </div>
-                        <div className="p-6 text-gray-900 dark:text-gray-100">
+                        <div className="py-6 px-10 text-gray-900 dark:text-gray-100">
                             <div className="grid gap-1 grid-cols-2 mt-2">
                                 <div>
                                     <div className="mt-4">
@@ -43,24 +43,8 @@ export default function Show({ auth, project, tasks, queryParams }) {
                                         </label>
                                         <p className="mt-1">{project.name}</p>
                                     </div>
-
-                                    <div className="mt-4">
-                                        <label className="font-bold text-lg">
-                                            Due Date
-                                        </label>
-                                        <p className="mt-1">
-                                            {project.due_date}
-                                        </p>
-                                    </div>
-                                    <div className="mt-4">
-                                        <label className="font-bold text-lg">
-                                            Created By
-                                        </label>
-                                        <p className="mt-1">
-                                            {project.createdBy.name}
-                                        </p>
-                                    </div>
                                 </div>
+
                                 <div>
                                     <div className="mt-4">
                                         <label className="font-bold text-lg">
@@ -83,16 +67,37 @@ export default function Show({ auth, project, tasks, queryParams }) {
                                             </span>
                                         </p>
                                     </div>
+                                </div>
 
-                                    <div className="mt-4">
+                            </div>
+
+                            <div className="mt-8 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                                <div className="grid p-5 gap-1 grid-cols-4 mt-2">
+                                    <div className="">
                                         <label className="font-bold text-lg">
-                                            Create Date
+                                            Created Date
                                         </label>
                                         <p className="mt-1">
                                             {project.created_at}
                                         </p>
                                     </div>
-                                    <div className="mt-4">
+                                    <div className="">
+                                        <label className="font-bold text-lg">
+                                            Due Date
+                                        </label>
+                                        <p className="mt-1">
+                                            {project.due_date}
+                                        </p>
+                                    </div>
+                                    <div className="">
+                                        <label className="font-bold text-lg">
+                                            Create By
+                                        </label>
+                                        <p className="mt-1">
+                                            {project.createdBy.name}
+                                        </p>
+                                    </div>
+                                    <div className="">
                                         <label className="font-bold text-lg">
                                             Updated By
                                         </label>
