@@ -147,8 +147,8 @@ export default function TasksTable({ tasks, queryParams = null, hideProjectColum
                                         alt=""
                                     />
                                 </td>
-                                {!hideProjectColumn && <td className="px-3 py-2 ">
-                                    {task.project.name.split(" ").slice(0, 5).join(" ") + (task.project.name.split(" ").length > 5 ? "..." : "")}
+                                {!hideProjectColumn && <td className="px-3 py-2">
+                                    {task.project.name.split(" ").slice(0, 3).join(" ") + (task.project.name.split(" ").length > 5 ? "..." : "")}
                                 </td>}
                                 <td className="px-3 py-2 text-nowrap">
                                     {task.name.split(" ").slice(0, 5).join(" ") + (task.name.split(" ").length > 5 ? "..." : "")}
