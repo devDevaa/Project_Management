@@ -6,31 +6,32 @@ import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 
-export default function Create({ auth }) {
+export default function Create({ auth, user }) {
     const { data, setData, post, errors, reset } = useForm({
-        name: "",
-        email: "",
+        name: user.name || "",
+        email: user.email || "",
         password: "",
         password_confirmation: "",
+        _method: "PUT",
     });
 
     const onSubmit = (e) => {
         e.preventDefault();
-        post(route("users.store"));
+        post(route("users.update", user.id));
     };
 
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={
-                <div className="flex items-center justify-between">
+                <div className="flex justify-between items-center">
                     <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                        Create new user
+                        Edit user - "{user.name}"
                     </h2>
                 </div>
             }
         >
-            <Head title="New User" />
+            <Head title="Users" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -141,6 +142,7 @@ export default function Create({ auth }) {
                                     Submit
                                 </button>
                             </div>
+
                         </form>
                     </div>
                 </div>
