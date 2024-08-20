@@ -1,6 +1,8 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import {
+    TASK_PRIORITY_CLASS_MAP,
+    TASK_PRIORITY_TEXT_MAP,
     TASK_STATUS_CLASS_MAP,
     TASK_STATUS_TEXT_MAP,
 } from "@/constants.js";
@@ -45,30 +47,71 @@ export default function Show({ auth, task, tasks, queryParams }) {
                                     </div>
                                 </div>
 
-                                <div>
+                                <div className="grid gap-1 grid-cols-2">
+                                    <div>
+                                        <div className="mt-4">
+                                            <label className="font-bold text-lg">
+                                                Task Status
+                                            </label>
+                                            <p className="mt-1">
+                                                <span
+                                                    className={
+                                                        "px-2 py-1 rounded text-white " +
+                                                        TASK_STATUS_CLASS_MAP[
+                                                            task.status
+                                                        ]
+                                                    }
+                                                >
+                                                    {
+                                                        TASK_STATUS_TEXT_MAP[
+                                                            task.status
+                                                        ]
+                                                    }
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+
                                     <div className="mt-4">
                                         <label className="font-bold text-lg">
-                                            Task Status
+                                            Task Priority
                                         </label>
                                         <p className="mt-1">
                                             <span
                                                 className={
                                                     "px-2 py-1 rounded text-white " +
-                                                    TASK_STATUS_CLASS_MAP[
-                                                        task.status
+                                                    TASK_PRIORITY_CLASS_MAP[
+                                                        task.priority
                                                     ]
                                                 }
                                             >
                                                 {
-                                                    TASK_STATUS_TEXT_MAP[
-                                                        task.status
+                                                    TASK_PRIORITY_TEXT_MAP[
+                                                        task.priority
                                                     ]
                                                 }
                                             </span>
                                         </p>
                                     </div>
                                 </div>
+                            </div>
 
+                            <div className="grid gap-1 grid-cols-2 mt-2">
+                            <div className="mt-4">
+                                <label className="font-bold text-lg">Project</label>
+                                <p className="mt-1">
+                                <Link
+                                    href={route("projects.show", task.project.id)}
+                                    className="hover:underline"
+                                >
+                                    {task.project.name}
+                                </Link>
+                                </p>
+                            </div>
+                            <div className="mt-4">
+                                <label className="font-bold text-lg">Assigned User</label>
+                                <p className="mt-1">{task.assignedUser.name}</p>
+                            </div>
                             </div>
 
                             <div className="mt-8 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
@@ -85,9 +128,7 @@ export default function Show({ auth, task, tasks, queryParams }) {
                                         <label className="font-bold text-lg">
                                             Due Date
                                         </label>
-                                        <p className="mt-1">
-                                            {task.due_date}
-                                        </p>
+                                        <p className="mt-1">{task.due_date}</p>
                                     </div>
                                     <div className="">
                                         <label className="font-bold text-lg">
@@ -119,7 +160,7 @@ export default function Show({ auth, task, tasks, queryParams }) {
                 </div>
             </div>
 
-            <div className="pb-12">
+            {/* <div className="pb-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
@@ -135,7 +176,7 @@ export default function Show({ auth, task, tasks, queryParams }) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </AuthenticatedLayout>
     );
 }

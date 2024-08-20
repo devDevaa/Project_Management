@@ -239,7 +239,7 @@ export default function Index({ auth, projects, queryParams = null, success }) {
                                                         {project.name}
                                                     </Link>
                                                 </td>
-                                                <td className="px-3 py-2">
+                                                <td className="px-3 py-2 text-nowrap">
                                                     <span
                                                         className={
                                                             "px-2 py-1 rounded text-white " +

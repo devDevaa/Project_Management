@@ -83,25 +83,8 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        $query = $task->tasks();
-        // sorting
-        $sortFields = request("sort_fields", "created_at");
-        $sortDirecton = request("sort_directon", "desc");
-
-        // search with name
-        if (request("name")) {
-            $query->where("name", "like", "%".request("name")."%");
-        }
-        // group with status
-        if (request("status")) {
-            $query->where("status",request("status"));
-        }
-        $tasks = $query->orderBy($sortFields, $sortDirecton)
-        ->paginate(10)->onEachSide(1);
         return inertia('Task/Show', [
             'task' => new TaskResource($task),
-            'tasks' => TaskResource::collection($tasks),
-            "queryParams" => request()->query() ?: null,
         ]);
     }
 
@@ -148,5 +131,33 @@ class TaskController extends Controller
             Storage::disk('public')->deleteDirectory(dirname($task->image_path));
         }
         return to_route('tasks.index')->with('success', 'Task was deleted!');
+    }
+
+    public function myTasks()
+    {
+        $user = Auth::user();
+        $query = Task::query()->where('assigned_user_id', $user->id);
+
+        // sorting
+        $sortFields = request("sort_fields", "created_at");
+        $sortDirecton = request("sort_directon", "desc");
+
+        // search with name
+        if (request("name")) {
+            $query->where("name", "like", "%".request("name")."%");
+        }
+        // group with status
+        if (request("status")) {
+            $query->where("status",request("status"));
+        }
+
+        $tasks = $query->orderBy($sortFields, $sortDirecton)
+                    ->paginate(10)->onEachSide(1);
+
+        return inertia("Task/Index", [
+            "tasks" => TaskResource::collection($tasks),
+            "queryParams" => request()->query() ?: null,
+            "success" => session('success'),
+        ]);
     }
 }
